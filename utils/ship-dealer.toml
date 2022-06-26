@@ -1,0 +1,24 @@
+
+client = "client"
+database = "aa"
+
+[car]
+chrunk_dir = "chrunk_dir"
+car_dir = "car_dir"
+size = 17000
+
+[dealer]
+miner = "miner"
+node = "node"
+datacap = 15000
+deal_wait = 12000
+pending_limit = 50
+verified_deal = false
+
+
+[market]
+miner = "miner"
+token = "token"
+rpc = "rpc"
+car_dir = "cair_dir"
+import_wait = 40

@@ -1,0 +1,67 @@
+# client address
+client = "clientaddr"
+
+# mysql://username:password@tcp(host:port)/db_name
+# sqlite://db_path
+database = ""
+
+# lotus node contains client private key
+node = "127.0.0.1:1234"
+
+# lotus node rpc token from ~/.lotus/token
+token = "eyjh..."
+
+[car]
+
+enable = true
+
+# directory store churnk files
+chrunk_dir = "/chrunk_dir"
+
+# directory store car files
+car_dir = "/car_dir"
+
+# min size (MB)
+size = 17000
+
+[dealer]
+
+eanble = true
+
+# SP address
+miner = "miner"
+
+# sp market address
+node = "node"
+
+# sp datacap use limit
+datacap = 15000
+
+# 
+deal_wait = 1200
+
+# pending deals limit
+pending_limit = 50
+
+# is verified deal
+verified_deal = false
+
+
+[market]
+
+enable = false
+
+# SP address
+miner = "miner"
+
+# market node token, ~/.lotusminer/token
+token = "token"
+
+# market rpc 
+rpc = "127.0.0.1:2345"
+
+# directory store car files
+car_dir = "cair_dir"
+
+
+import_wait = 40

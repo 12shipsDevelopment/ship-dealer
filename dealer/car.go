@@ -63,6 +63,7 @@ func (t *CarTask) Run() {
 			if sdata.Id == 0 || len(sdata.Cid) == 0 || len(sdata.Commp) == 0 || sdata.Size == 0 || car_err != nil {
 				count += 1
 				log.Printf("look up %s\n", chrunk)
+				t.Dealer.Model.UpdateDataCommp("", 1, chrunk)
 				chrunkch <- chrunk
 			}
 		}
@@ -82,7 +83,6 @@ func (t *CarTask) Lookupchrunk() []string {
 }
 
 func (t *CarTask) importData(path string) {
-	t.Dealer.Model.NewData(path)
 	/*
 		p1 := lotusapi.FileRef{
 			Path:  fmt.Sprintf("%s/%s", t.Chrunkdir, path),
@@ -161,7 +161,6 @@ func (t *CarTask) generateCar(srcPath string, outPath string) (cid.Cid, error) {
 	if err != nil {
 		return c, xerrors.Errorf("failed to stat file :%w", err)
 	}
-	fmt.Println("new reader", tmpPath)
 
 	file, err := files.NewReaderPathFile(srcPath, src, stat)
 	if err != nil {
@@ -183,8 +182,6 @@ func (t *CarTask) generateCar(srcPath string, outPath string) (cid.Cid, error) {
 	if err != nil {
 		return c, xerrors.Errorf("failed to create temporary filestore: %w", err)
 	}
-
-	fmt.Println("start build unixfs1", tmpPath)
 
 	finalRoot1, err := buildUnixFS(ctx, file, fstore, true)
 	if err != nil {
@@ -209,7 +206,6 @@ func (t *CarTask) generateCar(srcPath string, outPath string) (cid.Cid, error) {
 		return c, xerrors.Errorf("failed to rewind file: %w", err)
 	}
 
-	fmt.Println("start build unixfs2", tmpPath)
 	finalRoot2, err := buildUnixFS(ctx, file, bs, true)
 	if err != nil {
 		_ = bs.Close()
@@ -229,7 +225,6 @@ func (t *CarTask) generateCar(srcPath string, outPath string) (cid.Cid, error) {
 		return c, xerrors.Errorf("failed to import file using unixfs: %w", err)
 	}
 
-	fmt.Println("start readonly filestore", tmpPath)
 	// open the positional reference CAR as a filestore.
 	fs, err := stores.ReadOnlyFilestore(tmp)
 	if err != nil {
@@ -237,7 +232,6 @@ func (t *CarTask) generateCar(srcPath string, outPath string) (cid.Cid, error) {
 	}
 	defer fs.Close() //nolint:errcheck
 
-	fmt.Println("start ssb", tmpPath)
 	// build a dense deterministic CAR (dense = containing filled leaves)
 	ssb := builder.NewSelectorSpecBuilder(basicnode.Prototype.Any)
 	allSelector := ssb.ExploreRecursive(

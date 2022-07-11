@@ -36,7 +36,10 @@ func (t *DealTask) Run() {
 		if data.Id > 0 {
 			deals := t.Dealer.Model.GetPendingDeal(t.Cfg.Miner)
 			client_address, _ := address.NewFromString(t.Cfg.Client)
-			client_datacap, _ := t.Dealer.api.StateVerifiedClientStatus(context.Background(), client_address, types.EmptyTSK)
+
+			client_datacap, err := t.Dealer.api.StateVerifiedClientStatus(context.Background(), client_address, types.EmptyTSK)
+			fmt.Println(err)
+
 			miner_datacap := t.Dealer.Model.GetMinerDatacapUsed(t.Cfg.Client, t.Cfg.Miner)
 			orgfile, err := os.Stat(fmt.Sprintf("%s/%s", t.Dealer.Config.Car.ChrunkDir, data.Filename))
 			if err == nil {
@@ -47,6 +50,7 @@ func (t *DealTask) Run() {
 					t.Dealer.Model.UpdateDataCommp("", 0, data.Filename)
 				}
 			}
+			fmt.Println(client_datacap, miner_datacap)
 			if data.Id > 0 && data.Commp != "" && data.Cid != "" && data.Size != 0 && len(deals) < t.Cfg.PendingLimit && client_datacap.Int64() > int64(100*1024*1024*1024) && miner_datacap < int64(t.Cfg.Datacap*1024*1024*1024) && t.Dealer.CurrentEpoch > 0 {
 				t.makeDeal(data.Filename)
 			} else {

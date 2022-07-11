@@ -24,9 +24,9 @@ type DealConfig struct {
 	Client       string
 	Duration     int
 	Datacap      int
-	DealWait     int `toml:"deal_wait"`
-	PendingLimit int `toml:"pending_limit"`
-	VerifiedDeal bool
+	DealWait     int  `toml:"deal_wait"`
+	PendingLimit int  `toml:"pending_limit"`
+	VerifiedDeal bool `toml:"verified_deal"`
 }
 
 type CarConfig struct {

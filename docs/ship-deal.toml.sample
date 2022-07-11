@@ -1,5 +1,3 @@
-# client address
-client = "clientaddr"
 
 # mysql://username:password@tcp(host:port)/db_name
 # sqlite://db_path
@@ -15,16 +13,19 @@ token = "eyjh..."
 
 enable = true
 
-# directory store churnk files
-chrunk_dir = "/chrunk_dir"
+# directory store origin files
+chrunk_dir = "/origin_dir"
 
 # directory store car files
 car_dir = "/car_dir"
 
+#  task thread count
+thread = 1
+
 # min size (MB)
 size = 17000
 
-[dealer]
+[deal]
 
 eanble = true
 
@@ -34,8 +35,14 @@ miner = "miner"
 # sp market address
 node = "node"
 
+# client address
+client = "clientaddr"
+
 # sp datacap use limit
 datacap = 15000
+
+# deal duration
+duration = 528
 
 # 
 deal_wait = 1200
@@ -49,6 +56,7 @@ verified_deal = false
 
 [market]
 
+## SP set this true to import files
 enable = false
 
 # SP address

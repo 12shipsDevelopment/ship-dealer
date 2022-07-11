@@ -42,18 +42,22 @@ func (model *Model) NewData(filename string) {
 
 func (model *Model) UpdateDataCid(cid string, filename string) {
 	model.DB.Model(&Data{}).Where("filename", filename).Update("cid", cid)
+	model.DB.Commit()
 }
 
 func (model *Model) UpdateDataCommp(commp string, size int64, filename string) {
 	model.DB.Model(&Data{}).Where("filename", filename).Update("commp", commp).Update("size", size)
+	model.DB.Commit()
 }
 
 func (model *Model) UpdateStatus(status int, filename string) {
 	model.DB.Model(&Data{}).Where("filename", filename).Update("status", status)
+	model.DB.Commit()
 }
 
 func (model *Model) UpdateFilename(src_filename, dst_filename string) {
 	model.DB.Model(&Data{}).Where("filename", src_filename).Update("filename", dst_filename)
+	model.DB.Commit()
 }
 
 func (model *Model) CleanDirtyData() {
